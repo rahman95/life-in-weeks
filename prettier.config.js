@@ -1,5 +1,7 @@
 module.exports = {
-    plugins: ['prettier-plugin-svelte'],
-    svelteBracketNewLine: true,
-    svelteSortOrder: 'styles-scripts-markup',
-  };
+  "svelteSortOrder" : "styles-scripts-markup",
+  "svelteStrictMode": true,
+  "svelteBracketNewLine": true,
+  "svelteAllowShorthand": false,
+  "svelteIndentScriptAndStyle": false
+};

@@ -6,7 +6,7 @@
     "dev": "rollup -c -w",
     "start": "sirv public",
     "validate": "svelte-check",
-    "lint": "eslint 'src/**/*.{ts,svelte}'"
+    "lint": "eslint 'src/**/*.ts'"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^16.0.0",
@@ -35,7 +35,8 @@
     "svelte-preprocess": "^4.0.0",
     "tailwindcss": "^2.0.1",
     "tslib": "^2.0.0",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.3",
+    "yup": "^0.32.6"
   },
   "dependencies": {
     "sirv-cli": "^1.0.0",
