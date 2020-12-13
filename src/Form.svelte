@@ -1,18 +1,20 @@
 <script lang="ts">
+    import { formStore } from './store'
     import { formValidationSchema, extractErrors } from './schema';
-	import type { ErrorObject, FormModel } from "./types";
+	import type { ErrorObject } from "./types";
 
-	let model: FormModel = {
-		lifeExpectancy: 75,
-		dateOfBirth: ''
-    }
-
-	let errors: ErrorObject = {};
+    let errors: ErrorObject = {};
+    
+    // local bindings
+    let dateOfBirth: string = $formStore.dateOfBirth
+    let lifeExpectancy: number = $formStore.lifeExpectancy
 
 	function handleSubmit() {
-		formValidationSchema.validate(model, { abortEarly: false })
+		formValidationSchema.validate({dateOfBirth, lifeExpectancy}, { abortEarly: false })
       	.then(() => {
-        	errors = {}
+            errors = {}
+            formStore.setDateOfBirth(dateOfBirth)
+            formStore.setLifeExpectancy(lifeExpectancy)
 		  })
 		.catch(err => {
             console.error(err)
@@ -32,7 +34,7 @@
         <div class="bg-gray-50 text-gray-400 hover:text-gray-900 font-mono leading-6 py-3 sm:px-6 border border-gray-200 rounded-xl flex items-center justify-center space-x-2 sm:space-x-4 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-300 focus:outline-none transition-colors duration-200">
             <div class="text-gray-900">
                 <span class="hidden sm:inline text-gray-500" aria-hidden="true">📅 </span>
-                <input type="date" bind:value={model.dateOfBirth} name="date-of-birth" class="focus:outline-none focus:border-gray-400 focus:ring-0" />
+                <input type="date" bind:value={dateOfBirth} name="date-of-birth" class="focus:outline-none focus:border-gray-400 focus:ring-0" />
             </div>
         </div>
         {#if errors.dateOfBirth}<span class="text-red-500 text-sm italic">{errors.dateOfBirth}</span>{/if}
@@ -43,7 +45,7 @@
         <div class="bg-gray-50 text-gray-400 hover:text-gray-900 font-mono leading-6 py-3 sm:px-6 border border-gray-200 rounded-xl flex items-center justify-center space-x-2 sm:space-x-4 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-300 focus:outline-none transition-colors duration-200">
             <div class="text-gray-900">
                 <span class="hidden sm:inline text-gray-500" aria-hidden="true">😵 </span>
-                <input type="number" min="1" max="100" bind:value={model.lifeExpectancy} name="life-expectancy" class="w-16 focus:outline-none focus:border-gray-400 focus:ring-0" />
+                <input type="number" min="1" max="100" bind:value={lifeExpectancy} name="life-expectancy" class="w-16 focus:outline-none focus:border-gray-400 focus:ring-0" />
             </div>
         </div>
         {#if errors.lifeExpectancy}<span class="text-red-500 text-sm italic">{errors.lifeExpectancy}</span>{/if}	
