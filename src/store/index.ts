@@ -1,10 +1,12 @@
 import { writable } from "svelte/store";
-import type { FormModel } from "./types";
+import { getAge } from "../helpers/dateHelper";
+import type { FormModel } from "../types";
 
 function createFormStore() {
   const defaultStore: FormModel = {
     lifeExpectancy: 75,
     dateOfBirth: "",
+    age: null,
   };
 
   const { subscribe, update } = writable(defaultStore);
@@ -20,6 +22,7 @@ function createFormStore() {
     setDateOfBirth: (value: string) =>
       update((n) => {
         n.dateOfBirth = value;
+        n.age = getAge(value);
 
         return n;
       }),

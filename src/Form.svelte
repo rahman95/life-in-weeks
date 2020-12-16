@@ -1,6 +1,6 @@
 <script lang="ts">
     import { formStore } from './store'
-    import { formValidationSchema, extractErrors } from './schema';
+    import { formValidationSchema, extractErrors } from './validation/schema';
 	import type { ErrorObject } from "./types";
 
     let errors: ErrorObject = {};
