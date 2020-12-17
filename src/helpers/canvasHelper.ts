@@ -4,11 +4,15 @@ import type { CanvasItemConstructor } from "../types";
 const CANVAS_HEIGHT = 1500;
 const CANVAS_WIDTH = 1000;
 
-const ROW_HEIGHT = 10;
-const ROW_WIDTH = 1000;
-const ROW_GAP = 15;
+const RECT_HEIGHT = 5;
+const RECT_WIDTH = 10;
+const RECT_X_GAP = 15;
+const RECT_Y_GAP = 10;
 
-class RowRect {
+const COLOR_BLACK = "rgb(42,42,42)";
+const COLOR_GREY = "rgb(211,211,211)";
+
+class Rect {
   xPos: number;
   yPos: number;
   width: number;
@@ -32,29 +36,38 @@ const renderCanvas = (
   const canvas = document.getElementById(targetCanvasId) as HTMLCanvasElement;
   const ctx = canvas.getContext("2d");
 
-  // find out number of rows needed
-  // lifeExpectancy in weeks divide by 52 = rows
-  // render rows
-  const numberOfElapsedRows = currentAgeInWeeks / WEEKS_IN_YEAR;
-  const numberOfTotalRows = lifeExpectancyInWeeks / WEEKS_IN_YEAR;
-
+  let weekCount = 0;
   let xPos = 0;
-  let yPos = 50;
-  const rows: RowRect[] = [];
-  for (let i = 0; i < numberOfTotalRows; i++) {
-    const row = new RowRect({
+  let yPos = 0;
+  const rows: Rect[] = [];
+  for (let i = 0; i < lifeExpectancyInWeeks; i++) {
+    // reset values back
+    if (weekCount == WEEKS_IN_YEAR) {
+      // update xPos back to start of row and reset weekCount
+      weekCount = 0;
+      xPos = 0;
+
+      // add gap in between rows
+      yPos += RECT_Y_GAP;
+    }
+
+    // Change color once iteration passes currentAgeInWeeks
+    const color = currentAgeInWeeks > i ? COLOR_BLACK : COLOR_GREY;
+
+    const row = new Rect({
       xPos,
       yPos,
-      width: ROW_WIDTH,
-      height: ROW_HEIGHT,
-      color: "rgb(0,0,255)",
+      width: RECT_WIDTH,
+      height: RECT_HEIGHT,
+      color,
     });
     rows.push(row);
 
-    yPos += ROW_GAP;
+    xPos += RECT_X_GAP;
+    weekCount += 1;
   }
 
-  const drawRect = function (rect: RowRect, ctx: CanvasRenderingContext2D) {
+  const drawRect = function (rect: Rect, ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = rect.color;
     ctx.fillRect(rect.xPos, rect.yPos, rect.width, rect.height);
   };
