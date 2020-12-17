@@ -17,4 +17,4 @@ const getAgeInWeeks = (age: number): number => {
   return age * WEEKS_IN_YEAR;
 };
 
-export { getAge, getAgeInWeeks };
+export { getAge, getAgeInWeeks, WEEKS_IN_YEAR };
