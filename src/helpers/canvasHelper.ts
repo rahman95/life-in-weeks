@@ -104,11 +104,13 @@ const rectSizingFromParent = (parentWidth: number, lifeExpectancy: number) => {
   const remainingHeight = CANVAS_HEIGHT - totalHeight;
   const heightGap = remainingHeight / lifeExpectancy;
 
+  const maxHeight = widthGap == 5 ? 8.5 : 5;
+
   return {
     WIDTH: width,
     HEIGHT: height,
     WIDTH_GAP: widthGap,
-    HEIGHT_GAP: heightGap,
+    HEIGHT_GAP: maxHeight < heightGap ? maxHeight : heightGap, // max height gap if too high
   };
 };
 

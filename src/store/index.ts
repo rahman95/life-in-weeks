@@ -1,10 +1,11 @@
 import { writable } from "svelte/store";
-import type { FormModel } from "../types";
+import type { DefaultStore } from "../types";
 
 function createFormStore() {
-  const defaultStore: FormModel = {
+  const defaultStore: DefaultStore = {
     lifeExpectancy: 75,
     dateOfBirth: "",
+    collapsed: false,
   };
 
   const { subscribe, update } = writable(defaultStore);
@@ -20,6 +21,12 @@ function createFormStore() {
     setDateOfBirth: (value: string) =>
       update((n) => {
         n.dateOfBirth = value;
+
+        return n;
+      }),
+    setCollapsed: (value: boolean) =>
+      update((n) => {
+        n.collapsed = value;
 
         return n;
       }),

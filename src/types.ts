@@ -1,7 +1,7 @@
-export interface FormModel {
+export interface DefaultStore {
   lifeExpectancy: number;
   dateOfBirth: string;
-  age?: number;
+  collapsed: boolean;
 }
 
 export interface ErrorObject {
