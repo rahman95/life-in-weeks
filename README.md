@@ -9,7 +9,7 @@
 _Life's progress made visible..._
 
 Visualising your life in weeks can feel weird and morbid to some but it can prove to be a good indicator of where you currently are in life.
-This tool aims to be seen in a positive light and help you pursue a better future to maximise the time you have left.✈️ 🏖️ 🚵‍♂️ 🏄‍♂️
+This tool aims to be seen in a positive light and help you pursue a better future to maximise the time you have left.
 
 This is a project built using the [Svelte](https://svelte.dev) starter found [here](https://github.com/sveltejs/template) configured to use [TypeScript](https://www.typescriptlang.org/), [Tailwind](https://tailwindcss.com/) and [Rollup](https://rollupjs.org).
 
