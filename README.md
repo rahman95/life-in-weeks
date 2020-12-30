@@ -2,7 +2,7 @@
     <img src="docs/assets/logo.png" alt="Logo" width="65%">
 </p>
 
-## **_my-life-in-weeks_**
+## **_life-in-weeks_**
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/848c185e-dd0c-47e8-b6e3-d86a6f0490f7/deploy-status)](https://app.netlify.com/sites/life-in-weeks/deploys)
 
@@ -13,26 +13,41 @@ This tool aims to be seen in a positive light and help you pursue a better futur
 
 This is a project built using the [Svelte](https://svelte.dev) starter found [here](https://github.com/sveltejs/template) configured to use [TypeScript](https://www.typescriptlang.org/), [Tailwind](https://tailwindcss.com/) and [Rollup](https://rollupjs.org).
 
-## Get started
+## Usage
 
-Install the dependencies...
-
+Install the dependencies
 ```bash
 npm install
 ```
 
-...then start the local development server by running
-
+Start the local development server by running
 ```bash
 npm run dev
 ```
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+Navigate to [localhost:5000](http://localhost:5000), the app should now be running 🚀
+
+## Linting
+
+To lint the project, run
+```bash
+npm run lint
+```
+
+This will run `es-lint` to lint your project files.
 
 ## Build
 
-To create an optimised version of the app, run
+To create an optimised version of the app, simply run
 
 ```bash
 npm run build
 ```
+
+A production-ready build will be put together and placed in the `public/` directory
+
+---
+
+<p align="center"> 
+    ✈️ 🏖️ 🚵‍♂️ 🏄‍♂️
+</p>
