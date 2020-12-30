@@ -2,12 +2,6 @@ import { WEEKS_IN_YEAR } from "./dateHelper";
 import type { CanvasItemConstructor } from "../types";
 
 const CANVAS_HEIGHT = 1500;
-const CANVAS_WIDTH = 1000;
-
-const RECT_HEIGHT = 5;
-const RECT_WIDTH = 10;
-const RECT_X_GAP = 15;
-const RECT_Y_GAP = 10;
 
 const COLOR_BLACK = "rgb(42,42,42)";
 const COLOR_GREY = "rgb(211,211,211)";
@@ -35,10 +29,21 @@ const renderCanvas = (
 ) => {
   const canvas = document.getElementById(targetCanvasId) as HTMLCanvasElement;
   const ctx = canvas.getContext("2d");
+  const parent = canvas.parentElement;
+
+  const rectSizing = rectSizingFromParent(
+    parent.offsetWidth,
+    lifeExpectancyInWeeks / WEEKS_IN_YEAR
+  );
+
+  canvas.width = parent.offsetWidth;
+  canvas.height = CANVAS_HEIGHT;
 
   let weekCount = 0;
   let xPos = 0;
   let yPos = 0;
+  let color = COLOR_BLACK;
+
   const rows: Rect[] = [];
   for (let i = 0; i < lifeExpectancyInWeeks; i++) {
     // reset values back
@@ -48,22 +53,24 @@ const renderCanvas = (
       xPos = 0;
 
       // add gap in between rows
-      yPos += RECT_Y_GAP;
+      yPos += rectSizing.HEIGHT + rectSizing.HEIGHT_GAP;
     }
 
-    // Change color once iteration passes currentAgeInWeeks
-    const color = currentAgeInWeeks > i ? COLOR_BLACK : COLOR_GREY;
+    // Change color once iteration = currentAgeInWeeks
+    if (i == currentAgeInWeeks) {
+      color = COLOR_GREY;
+    }
 
     const row = new Rect({
       xPos,
       yPos,
-      width: RECT_WIDTH,
-      height: RECT_HEIGHT,
+      width: rectSizing.WIDTH,
+      height: rectSizing.HEIGHT,
       color,
     });
     rows.push(row);
 
-    xPos += RECT_X_GAP;
+    xPos += rectSizing.WIDTH + rectSizing.WIDTH_GAP;
     weekCount += 1;
   }
 
@@ -73,7 +80,7 @@ const renderCanvas = (
   };
 
   const draw = function () {
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i in rows) {
       drawRect(rows[i], ctx);
     }
@@ -85,6 +92,24 @@ const renderCanvas = (
   };
 
   step();
+};
+
+const rectSizingFromParent = (parentWidth: number, lifeExpectancy: number) => {
+  const widthGap = parentWidth > 1050 ? 5 : 2.5;
+  const gapWidthTotal = widthGap * WEEKS_IN_YEAR;
+  const width = (parentWidth - gapWidthTotal) / WEEKS_IN_YEAR;
+
+  const height = width * 0.75;
+  const totalHeight = height * lifeExpectancy;
+  const remainingHeight = CANVAS_HEIGHT - totalHeight;
+  const heightGap = remainingHeight / lifeExpectancy;
+
+  return {
+    WIDTH: width,
+    HEIGHT: height,
+    WIDTH_GAP: widthGap,
+    HEIGHT_GAP: heightGap,
+  };
 };
 
 export { renderCanvas };

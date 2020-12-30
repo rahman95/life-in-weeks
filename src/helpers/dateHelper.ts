@@ -17,4 +17,12 @@ const getAgeInWeeks = (age: number): number => {
   return age * WEEKS_IN_YEAR;
 };
 
-export { getAge, getAgeInWeeks, WEEKS_IN_YEAR };
+const getWeeksFromDoB = (dateString: string): number => {
+  const dateOfBirth = new Date(dateString);
+  const now = new Date();
+  const diff = Math.round(Number(now) - Number(dateOfBirth));
+
+  return Math.round(diff / 1000 / 60 / 60 / 24 / 7);
+};
+
+export { getAge, getAgeInWeeks, getWeeksFromDoB, WEEKS_IN_YEAR };

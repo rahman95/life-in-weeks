@@ -1,32 +1,37 @@
 <script lang="ts">
+    import debounce from 'lodash/debounce'
+
     import { formStore } from './store'
-    import { getAgeInWeeks } from './helpers/dateHelper'
+    import { getAgeInWeeks, getWeeksFromDoB } from './helpers/dateHelper'
     import { renderCanvas } from './helpers/canvasHelper'
 
     // local bindings
     let dateOfBirth: string;
-    let age: number;
     let lifeExpectancy: number;
 
+    const renderResults = () => {
+        if($formStore.dateOfBirth.length == 0) {
+            return
+        }
+
+        renderCanvas("resultsCanvas", getWeeksFromDoB(dateOfBirth), getAgeInWeeks(lifeExpectancy))
+    }
+
     formStore.subscribe(value => {
-        if(value.dateOfBirth.length == 0 || value.age == null) {
-            console.log('value not set yet')
+        // dont update/set if value = 0
+        if(value.dateOfBirth.length == 0) {
             return
         }
 
         dateOfBirth = value.dateOfBirth
-        age = value.age
         lifeExpectancy = value.lifeExpectancy
 
-        console.log('value updated')
-        console.log({dateOfBirth, age, lifeExpectancy})
-
-        // TODO: needs fixing - not accurate as it doesnt include weeks lapsed in current year for age
-        console.log('your age in weeks', getAgeInWeeks(age))
-        console.log('life expectancy in weeks', getAgeInWeeks(lifeExpectancy))
-
-        renderCanvas("testCanvas", getAgeInWeeks(age), getAgeInWeeks(lifeExpectancy))
+        renderResults()
     })
+
+    window.addEventListener('resize', debounce(() => {
+        renderResults()
+    }, 500))
 </script>
 
 <style>
@@ -35,6 +40,6 @@
     }
 </style>
 
-<div class="results-container">
-    <canvas id="testCanvas" width="1000" height="1500"></canvas>
+<div class="results-container flex justify-center">
+    <canvas id="resultsCanvas"></canvas>
 </div>
