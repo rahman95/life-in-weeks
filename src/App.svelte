@@ -20,14 +20,14 @@
 
 
 <SvelteSeo
-  title="My Life in Weeks | RYounus"
+  title="Life in Weeks | RYounus"
   description="Life's progress made visible..."
 />
 <Tailwind />
 <main>
 	<div class="relative z-10 max-w-screen-lg xl:max-w-screen-xl mx-auto">
 		<div class="wrapper">
-			<h1>My Life in Weeks</h1>
+			<h1>Life in Weeks.</h1>
 
 			<p class="text-gray-900 font-bold">Life's progress made visible...</p> 
 			<p>Visualising your life in weeks can <i class="font-light pr-1.5">feel weird</i> and <i class="font-light pr-1.5">morbid</i> to some but it can prove to be a good indicator of where you currently are in life.</p>

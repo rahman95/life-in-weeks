@@ -4,6 +4,7 @@
   "scripts": {
     "build": "rollup -c --environment NODE_ENV:production",
     "dev": "rollup -c -w",
+    "start": "sirv public",
     "validate": "svelte-check",
     "lint": "eslint 'src/**/*.ts'"
   },
@@ -39,6 +40,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.20",
+    "sirv-cli": "^1.0.0",
     "svelte-seo": "^1.0.2",
     "typeface-inter": "^1.1.13"
   }
