@@ -1,7 +1,5 @@
 import { WEEKS_IN_YEAR } from "./dateHelper";
-import type { CanvasItemConstructor } from "../types";
-
-const CANVAS_HEIGHT = 1500;
+import type { CanvasItemConstructor, ParentRectSizing } from "../types";
 
 const COLOR_BLACK = "rgb(42,42,42)";
 const COLOR_GREY = "rgb(211,211,211)";
@@ -22,22 +20,42 @@ class Rect {
   }
 }
 
+const setUpCanvas = (
+  targetCanvasId: string,
+  width: number,
+  height: number,
+  pixelRatio: number
+): HTMLCanvasElement => {
+  const canvas = document.getElementById(targetCanvasId) as HTMLCanvasElement;
+  canvas.width = width * pixelRatio;
+  canvas.height = height * pixelRatio;
+  canvas.style.width = width + "px";
+  canvas.style.height = height + "px";
+
+  canvas.getContext("2d").setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+  return canvas;
+};
+
 const renderCanvas = (
   targetCanvasId: string,
   currentAgeInWeeks: number,
-  lifeExpectancyInWeeks: number
+  lifeExpectancyInWeeks: number,
+  pixelRatio: number
 ) => {
-  const canvas = document.getElementById(targetCanvasId) as HTMLCanvasElement;
-  const ctx = canvas.getContext("2d");
-  const parent = canvas.parentElement;
-
+  const parent = document.getElementById(targetCanvasId).parentElement;
   const rectSizing = rectSizingFromParent(
     parent.offsetWidth,
     lifeExpectancyInWeeks / WEEKS_IN_YEAR
   );
 
-  canvas.width = parent.offsetWidth;
-  canvas.height = CANVAS_HEIGHT;
+  const canvas = setUpCanvas(
+    targetCanvasId,
+    parent.offsetWidth,
+    rectSizing.canvasHeight,
+    pixelRatio
+  );
+  const ctx = canvas.getContext("2d");
 
   let weekCount = 0;
   let xPos = 0;
@@ -53,7 +71,7 @@ const renderCanvas = (
       xPos = 0;
 
       // add gap in between rows
-      yPos += rectSizing.HEIGHT + rectSizing.HEIGHT_GAP;
+      yPos += rectSizing.height + rectSizing.heightGap;
     }
 
     // Change color once iteration = currentAgeInWeeks
@@ -64,13 +82,13 @@ const renderCanvas = (
     const row = new Rect({
       xPos,
       yPos,
-      width: rectSizing.WIDTH,
-      height: rectSizing.HEIGHT,
+      width: rectSizing.width,
+      height: rectSizing.height,
       color,
     });
     rows.push(row);
 
-    xPos += rectSizing.WIDTH + rectSizing.WIDTH_GAP;
+    xPos += rectSizing.width + rectSizing.widthGap;
     weekCount += 1;
   }
 
@@ -94,24 +112,42 @@ const renderCanvas = (
   step();
 };
 
-const rectSizingFromParent = (parentWidth: number, lifeExpectancy: number) => {
+const getPixelRatio = (): number => {
+  const ctx = document.createElement("canvas").getContext("2d") as any;
+  const dpr = window.devicePixelRatio || 1;
+  const bsr =
+    ctx?.webkitBackingStorePixelRatio ||
+    ctx?.mozBackingStorePixelRatio ||
+    ctx?.msBackingStorePixelRatio ||
+    ctx?.oBackingStorePixelRatio ||
+    ctx?.backingStorePixelRatio ||
+    1;
+
+  return dpr / bsr;
+};
+
+const rectSizingFromParent = (
+  parentWidth: number,
+  lifeExpectancy: number
+): ParentRectSizing => {
   const widthGap = parentWidth > 1050 ? 5 : 2.5;
   const gapWidthTotal = widthGap * WEEKS_IN_YEAR;
   const width = (parentWidth - gapWidthTotal) / WEEKS_IN_YEAR;
 
   const height = width * 0.75;
   const totalHeight = height * lifeExpectancy;
-  const remainingHeight = CANVAS_HEIGHT - totalHeight;
-  const heightGap = remainingHeight / lifeExpectancy;
+  const heightGap = widthGap == 5 ? 8.5 : 3.5;
 
-  const maxHeight = widthGap == 5 ? 8.5 : 5;
+  const buffer = 25;
+  const canvasHeight = buffer + totalHeight + heightGap * lifeExpectancy;
 
   return {
-    WIDTH: width,
-    HEIGHT: height,
-    WIDTH_GAP: widthGap,
-    HEIGHT_GAP: maxHeight < heightGap ? maxHeight : heightGap, // max height gap if too high
+    width,
+    height,
+    widthGap,
+    heightGap,
+    canvasHeight,
   };
 };
 
-export { renderCanvas };
+export { renderCanvas, getPixelRatio };

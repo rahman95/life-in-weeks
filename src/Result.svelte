@@ -3,7 +3,7 @@
 
     import { formStore } from './store'
     import { getAgeInWeeks, getWeeksFromDoB } from './helpers/dateHelper'
-    import { renderCanvas } from './helpers/canvasHelper'
+    import { renderCanvas, getPixelRatio } from './helpers/canvasHelper'
 
     // local bindings
     let dateOfBirth: string;
@@ -18,7 +18,7 @@
             return
         }
 
-        renderCanvas("resultsCanvas", getWeeksFromDoB(dateOfBirth), getAgeInWeeks(lifeExpectancy))
+        renderCanvas("resultsCanvas", getWeeksFromDoB(dateOfBirth), getAgeInWeeks(lifeExpectancy), getPixelRatio())
         rendered = true
     }
 
