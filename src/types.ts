@@ -15,3 +15,11 @@ export interface CanvasItemConstructor {
   height: number;
   color?: string;
 }
+
+export interface ParentRectSizing {
+  width: number;
+  height: number;
+  widthGap: number;
+  heightGap: number;
+  canvasHeight: number;
+}
