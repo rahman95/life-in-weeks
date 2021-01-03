@@ -65,7 +65,22 @@
     </div>
     {/if}
 
-    <div class="results-container flex justify-center">
-        <canvas id="resultsCanvas"></canvas>
+    <div class="results-container flex">
+        <!-- {#if rendered} -->
+        <div class="flex flex-col flex-grow">
+            <hr class="relative top-2 sm:top-3 border-l-2 sm:border-l-3 md:border-l-4 border-gray-500 w-full mx-2 md:mx-3 lg:mx-4">
+            <span style="writing-mode: vertical-rl;">Years</span>
+        </div>
+        <div class="flex flex-row flex-grow justify-end justify-items-end py-3">
+            <hr class="relative top-2 sm:top-3 border-t-2 sm:border-t-3 md:border-t-4 border-gray-500 w-full mx-2 md:mx-3 lg:mx-4"> 
+            <span class="text-gray-500 text-xs sm:text-sm md:text-base lg:text-lg mx-2 md:mx-3 lg:mx-4">Weeks</span>
+
+            <canvas id="resultsCanvas"></canvas>
+        </div>
+        
+        <!-- {/if} -->
+        <!-- <div class="flex flex-grow">
+            
+        </div> -->
     </div>
 </div>
