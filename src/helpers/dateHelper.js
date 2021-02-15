@@ -1,6 +1,6 @@
 const WEEKS_IN_YEAR = 52;
 
-const getAge = (dateString: string): number => {
+const getAge = (dateString) => {
   const today = new Date();
   const birthDate = new Date(dateString);
 
@@ -13,11 +13,11 @@ const getAge = (dateString: string): number => {
   return age;
 };
 
-const getAgeInWeeks = (age: number): number => {
+const getAgeInWeeks = (age) => {
   return age * WEEKS_IN_YEAR;
 };
 
-const getWeeksFromDoB = (dateString: string): number => {
+const getWeeksFromDoB = (dateString) => {
   const dateOfBirth = new Date(dateString);
   const now = new Date();
   const diff = Math.round(Number(now) - Number(dateOfBirth));

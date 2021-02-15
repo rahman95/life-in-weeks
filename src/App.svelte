@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import SvelteSeo from "svelte-seo";
 	
 	import { formStore } from './store'
@@ -8,7 +8,7 @@
 	import Footer from './Footer.svelte'
 
 	// local bindings
-	let collapsed: boolean = $formStore.collapsed
+	let collapsed = $formStore.collapsed
 	
 	formStore.subscribe(value => {
         collapsed = value.collapsed;
