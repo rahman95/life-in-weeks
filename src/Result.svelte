@@ -50,22 +50,22 @@
 </script>
 
 <style>
-    .results-container {
-        @apply mt-4 mb-8 sm:mt-8 sm:mb-10;
+    .button-wrapper {
+        @apply flex flex-grow mt-2 justify-end justify-items-end
     }
-    button {
-        @apply w-full h-12 sm:w-auto flex-none bg-gray-900 hover:bg-gray-700 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-900 focus:outline-none transition-colors duration-200;
+    .results-container {
+        @apply flex justify-center mt-4 mb-8 sm:mt-8 sm:mb-5;
     }
 </style>
 
 <div>
     {#if rendered}
-    <div class="flex flex-grow justify-end justify-items-end">
-        <button class="mr-1.5" on:click={handleCollapse}>Collapse/Expand</button>
+    <div class="button-wrapper">
+        <button on:click={handleCollapse}>Collapse/Expand</button>
     </div>
     {/if}
 
-    <div class="results-container flex justify-center">
+    <div class="results-container">
         <canvas id="resultsCanvas"></canvas>
     </div>
 </div>
