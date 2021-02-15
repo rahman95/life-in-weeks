@@ -1,17 +1,10 @@
 import { WEEKS_IN_YEAR } from "./dateHelper";
-import type { CanvasItemConstructor, ParentRectSizing } from "../types";
 
 const COLOR_BLACK = "rgb(42,42,42)";
 const COLOR_GREY = "rgb(211,211,211)";
 
 class Rect {
-  xPos: number;
-  yPos: number;
-  width: number;
-  height: number;
-  color: string;
-
-  constructor({ xPos, yPos, width, height, color }: CanvasItemConstructor) {
+  constructor({ xPos, yPos, width, height, color }) {
     this.xPos = xPos;
     this.yPos = yPos;
     this.width = width;
@@ -20,13 +13,8 @@ class Rect {
   }
 }
 
-const setUpCanvas = (
-  targetCanvasId: string,
-  width: number,
-  height: number,
-  pixelRatio: number
-): HTMLCanvasElement => {
-  const canvas = document.getElementById(targetCanvasId) as HTMLCanvasElement;
+const setUpCanvas = (targetCanvasId, width, height, pixelRatio) => {
+  const canvas = document.getElementById(targetCanvasId);
   canvas.width = width * pixelRatio;
   canvas.height = height * pixelRatio;
   canvas.style.width = width + "px";
@@ -38,10 +26,10 @@ const setUpCanvas = (
 };
 
 const renderCanvas = (
-  targetCanvasId: string,
-  currentAgeInWeeks: number,
-  lifeExpectancyInWeeks: number,
-  pixelRatio: number
+  targetCanvasId,
+  currentAgeInWeeks,
+  lifeExpectancyInWeeks,
+  pixelRatio
 ) => {
   const parent = document.getElementById(targetCanvasId).parentElement;
   const rectSizing = rectSizingFromParent(
@@ -62,7 +50,7 @@ const renderCanvas = (
   let yPos = 0;
   let color = COLOR_BLACK;
 
-  const rows: Rect[] = [];
+  const rows = [];
   for (let i = 0; i < lifeExpectancyInWeeks; i++) {
     // reset values back
     if (weekCount == WEEKS_IN_YEAR) {
@@ -92,7 +80,7 @@ const renderCanvas = (
     weekCount += 1;
   }
 
-  const drawRect = function (rect: Rect, ctx: CanvasRenderingContext2D) {
+  const drawRect = function (rect, ctx) {
     ctx.fillStyle = rect.color;
     ctx.fillRect(rect.xPos, rect.yPos, rect.width, rect.height);
   };
@@ -112,8 +100,8 @@ const renderCanvas = (
   step();
 };
 
-const getPixelRatio = (): number => {
-  const ctx = document.createElement("canvas").getContext("2d") as any;
+const getPixelRatio = () => {
+  const ctx = document.createElement("canvas").getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const bsr =
     ctx?.webkitBackingStorePixelRatio ||
@@ -126,10 +114,7 @@ const getPixelRatio = (): number => {
   return dpr / bsr;
 };
 
-const rectSizingFromParent = (
-  parentWidth: number,
-  lifeExpectancy: number
-): ParentRectSizing => {
+const rectSizingFromParent = (parentWidth, lifeExpectancy) => {
   const widthGap = parentWidth > 1050 ? 5 : 2.5;
   const gapWidthTotal = widthGap * WEEKS_IN_YEAR;
   const width = (parentWidth - gapWidthTotal) / WEEKS_IN_YEAR;

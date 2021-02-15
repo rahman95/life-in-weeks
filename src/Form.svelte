@@ -1,13 +1,12 @@
-<script lang="ts">
+<script>
     import { formStore } from './store'
     import { formValidationSchema, extractErrors } from './validation/schema';
-	import type { ErrorObject } from "./types";
 
-    let errors: ErrorObject = {};
+    let errors = {};
     
     // local bindings
-    let dateOfBirth: string = $formStore.dateOfBirth
-    let lifeExpectancy: number = $formStore.lifeExpectancy
+    let dateOfBirth = $formStore.dateOfBirth
+    let lifeExpectancy = $formStore.lifeExpectancy
 
 	function handleSubmit() {
 		formValidationSchema.validate({dateOfBirth, lifeExpectancy}, { abortEarly: false })

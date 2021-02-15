@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
     import debounce from 'lodash/debounce'
 
     import { formStore } from './store'
@@ -6,11 +6,11 @@
     import { renderCanvas, getPixelRatio } from './helpers/canvasHelper'
 
     // local bindings
-    let dateOfBirth: string;
-    let lifeExpectancy: number;
-    let collapsed: boolean;
+    let dateOfBirth;
+    let lifeExpectancy;
+    let collapsed;
 
-    let rendered: boolean = false;
+    let rendered = false;
 
     const renderResults = () => {
         if($formStore.dateOfBirth.length == 0) {
@@ -44,7 +44,7 @@
         renderResults()
     }, 500))
 
-    const handleCollapse = (e) => {
+    const handleCollapse = () => {
         formStore.setCollapsed(!collapsed)
     }
 </script>
