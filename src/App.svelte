@@ -5,6 +5,7 @@
 	import Tailwind from './style/Tailwind.svelte';
 	import Form from './Form.svelte'
 	import Result from './Result.svelte'
+	import Footer from './Footer.svelte'
 
 	// local bindings
 	let collapsed: boolean = $formStore.collapsed
@@ -15,6 +16,9 @@
 </script>
 
 <style>
+	.main {
+		@apply relative z-10 max-w-screen-lg xl:max-w-screen-xl mx-auto;
+	}
 	.wrapper {
 		@apply px-4 sm:px-6 md:px-8 mb-14 sm:mb-20 xl:mb-8;
 	}
@@ -33,7 +37,7 @@
 />
 <Tailwind />
 <main>
-	<div class="relative z-10 max-w-screen-lg xl:max-w-screen-xl mx-auto">
+	<div class="main">
 		<div class="wrapper">
 			<h1>Life in Weeks.</h1>
 
@@ -47,6 +51,8 @@
 			{/if}
 
 			<Result />
+
+			<Footer />
 		</div>
 	</div>
 </main>
